@@ -1,4 +1,4 @@
-#summary How works
+#summary How it works
 #labels Phase-Implementation,Phase-Design
 
 = Introduction =
@@ -22,7 +22,7 @@ More information, see test code.
 
 === Implementation ===
 
-Here your are the core of the program: `Class TemplateDict` which inherits from python class `dict` and redefines `__getitem__` whose is used by string operator `%` (python string template operator). The rest is work with XML documents using *minidom* module.
+Here your are the core of the program: *`Class TemplateDict`* which inherits from python class *`dict`* and redefines *`__getitem__`* method whose is used by string operator *`%`* (python string template operator). The rest of code is working with XML documents using *minidom* module.
 
 You can see the full source code in _Source_ section.
 
