@@ -1,28 +1,18 @@
 #summary How it works
-#labels Phase-Implementation,Phase-Design
+#labels Phase-Implementation,Phase-Design,development
 
 = Introduction =
 
-
-"""Un programa generador de XML, basado en el sistema de plantillas XML del
-modulo XMLTemplate. Lee los datos a partir de archivos CSV exportados a partir
-de una BD.
-"""
-
+The program *csv2xmlgen* is a XML generator based on the template system developed in the
+*xmltemplate.py* module. This module can be consider the core of the program.
 
 == Details ==
 
-XML generator from template module for Python
-
-Generates XML documents based on a template source (file, string, ...) setting 
-the part of XML template which will be cloned and repeated on each input data.
-Tip: http://blog.ianbicking.org/templating-via-dict-wrappers.html
-More information, see test code.
-
+The *xmltemplate.py* module for python generates XML documents based on a template source (file, string, ...) setting the part of XML template which will be cloned and repeated on each input data. Tip: [http://blog.ianbicking.org/templating-via-dict-wrappers.html]
 
 === Implementation ===
 
-Here your are the core of the program: *`Class TemplateDict`* which inherits from python class *`dict`* and redefines *`__getitem__`* method whose is used by string operator *`%`* (python string template operator). The rest of code is working with XML documents using *minidom* module.
+Here your are the core: *`Class TemplateDict`* which inherits from python class *`dict`* and redefines *`__getitem__`* method whose is used by the string operator *`%`* (python string template operator). The rest of code is working with XML documents using *minidom* and "csv" modules.
 
 You can see the full source code in _Source_ section.
 
