@@ -12,7 +12,7 @@ The module contains a class which generates XML documents based on a template so
 
 === Implementation ===
 
-Here your are the core. The  class *`TemplateDict`* inherits from python class *`dict`* and redefines *`__getitem__`* method whose is used by the string operator *`%`* (python string template operator). The rest of code is working with XML documents using *minidom* and "csv" modules.
+Here you are the code. The class *`TemplateDict`* inherits from python class *`dict`* (python dictionary) and redefines *`__getitem__`* method whose is used by the string operator *`%`* (python string template operator). The rest of code works with XML documents using the API of *minidom* and *csv* modules. 
 
 You can see the full source code in _Source_ section.
 
