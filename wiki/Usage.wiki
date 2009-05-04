@@ -110,16 +110,3 @@ NUMBER, CONTENIDO0, CONTENIDO2
 === XML Output file ===
 
 The output file is left as an exercise for the reader clever ... 
-
-
-
- 
-
-This program is based on the XML template system defined in *XMLTemplate.py* module.
-
- It reads data in CSV format exported from a DataBase and generates XML output file with the data with 
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
