@@ -4,7 +4,7 @@
 = Introduction =
 
 The program *csv2xmlgen* is a XML generator based on the template system developed in the
-*xmltemplate.py* module. This module can be consider the core of the program.
+*xmltemplate.py* module. This module can be considered the core of the program.
 
 == Details ==
 
