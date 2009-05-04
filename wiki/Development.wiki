@@ -8,7 +8,7 @@ The program *csv2xmlgen* is a XML generator based on the template system develop
 
 == Details ==
 
-The *xmltemplate.py* module for python generates XML documents based on a template source (file, string, ...) setting the part of XML template which will be cloned and repeated on each input data. Tip: [http://blog.ianbicking.org/templating-via-dict-wrappers.html]
+The *xmltemplate.py* module for python generates XML documents based on a template source (file, string, ...) setting the part of XML template which will be cloned and repeated on each input data. Clue: [http://blog.ianbicking.org/templating-via-dict-wrappers.html]
 
 === Implementation ===
 
