@@ -20,9 +20,11 @@ Tip: http://blog.ianbicking.org/templating-via-dict-wrappers.html
 More information, see test code.
 
 
-=== Main implementation ===
+=== Implementation ===
 
-You can see the source code ...
+Here your are the core of the program: `Class TemplateDict` which inherits from python class `dict` and redefines `__getitem__` whose is used by string operator `%` (python string template operator). The rest is work with XML documents using *minidom* module.
+
+You can see the full source code in _Source_ section.
 
 {{{
 # ##########################
