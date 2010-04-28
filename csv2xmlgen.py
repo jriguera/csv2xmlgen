@@ -21,7 +21,8 @@
 """
 A program to generate XML files based on a input template. It has been 
 developed for generating KML files (Google Earth layers) from CSV data, 
-but it can be used to process any kind of XML defined with the template. 
+but it can be used to process any kind of XML defined with the suitable 
+template. 
 """
 __program__ = "csv2xmlgen"
 __author__ = "Jose Riguera Lopez <jriguera@gmail.com>"
@@ -249,7 +250,7 @@ established by default in the configuration file:
          author = Noe
          date = December 2008
 
-Example input template file:
+Example of input template file:
 
     <XMLRootElement Author="%%(author)s" date='%%(date|ano da pera)s'>
        <element0 id='%%(NUMBER|0)s'>
@@ -264,7 +265,7 @@ Example input template file:
        </element2>
     </XMLRootElement>
 
-CSV input data file
+CSV input data file for the above XML template:
 
     NUMBER, CONTENIDO0, CONTENIDO2
     0, prueba0, TEST 0
