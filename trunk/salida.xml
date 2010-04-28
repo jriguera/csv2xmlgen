@@ -3,17 +3,17 @@
    <element0 id="0">
       <node1>
          
-             The content is no content .
+             The content is  prueba0 .
           
       </node1>
       <node1>
          
-             The content is no content .
+             The content is  data1 .
           
       </node1>
       <node1>
          
-             The content is no content .
+             The content is  data 2 .
           
       </node1>
    </element0>
@@ -25,7 +25,7 @@
       </node0>
       <node0>
          
-              The content is  TEST 1ñññññññññ .
+              The content is  TEST 1 .
           
       </node0>
       <node0>
@@ -35,5 +35,5 @@
       </node0>
    </element2>
 </XMLRootElement>
-<!--XML generated with csv2xmlgen version 0.3.0 at Thu Apr 29 01:12:52 2010.-->
+<!--XML generated with csv2xmlgen version 0.3.0 at Thu Apr 29 01:37:06 2010.-->
 <!--csv2xmlgen (c) Jose Riguera, October 2008, a GPL (v3 or later) program created by Jose Riguera Lopez <jriguera@gmail.com>.-->

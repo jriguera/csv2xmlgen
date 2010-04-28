@@ -3,32 +3,40 @@
 
 = Introduction =
 
-The program *csv2xmlgen* is a XML generator based on the template system developed in the
-*xmltemplate.py* module. This module can be considered the core of the program.
+The program *csv2xmlgen* is a XML generator based on the template system developed
+in the *sxmltemplate.py* module/package. This package can be considered the core 
+of the program.
 
 == Details ==
 
-The module contains a class which generates XML documents based on a template source (file, string, ...) setting the part of XML template which will be cloned and repeated on each input data. Clue: [http://blog.ianbicking.org/templating-via-dict-wrappers.html]
+The module contains a class which generates XML documents based on a template 
+source (file, string, ...) setting the part of XML template which will be cloned 
+and repeated on each input data. 
+Clue: [http://blog.ianbicking.org/templating-via-dict-wrappers.html]
 
 === Implementation ===
 
-Here you are the code. The class *`TemplateDict`* inherits from python class *`dict`* (python dictionary) and redefines *`__getitem__`* method whose is used by the string operator *`%`* (python string template operator). The rest of code works with XML documents using the API of *minidom* and *csv* modules. 
+Here you are the code. The class *`TemplateDict`* inherits from python class 
+*`dict`* (python dictionary) and redefines *`__getitem__`* method whose is 
+used by the string operator *`%`* (python string template operator). The rest 
+of code works with XML documents using the API of *minidom* and *csv* modules. 
 
 You can see the full source code in _Source_ section.
 
 {{{
-# ##########################
-# XMLTemplate implementation
-# ##########################
+# ###################################
+# SXMLTemplate implementation package
+# ###################################
 
-class XMLTemplate:
-    """Base class for XML Templates
+class SXMLTemplate:
+    """
+    Base class for Simple XML Templates
 
-    Generates a XML DOM document that is based on a template source (file, string ...) 
-    filled with external data. Appends selected new xml elements with external data.
-    Into xml template, it changes all keys with the format $(key|defautlvalue)s into 
-    the data of "key" from the dictionary, or "defaultvalue" if key is not found in 
-    dictionary.
+    It generates a XML DOM document that is based on a xml template source (file, string ...) 
+    that will be filled with external data by appending the selected new xml elements with  
+    data. Into XML input template, it changes all keys with the format $(key|defautlvalue)s 
+    into the data of "key" from the param dictionary, or "defaultvalue" if key is not found 
+    in dictionary.
     
     Public Attibutes:
 
@@ -44,20 +52,22 @@ class XMLTemplate:
 
 
     class TemplateDict(dict):
-        """Class for string templates with dictionaries and operator %
+        """
+        Class for string templates with dictionaries objects and operator %
 
         This class inherits all attributes, methods, ... from dict and redefines "__getitem__"
-        to returns default values when an element is searched with "key<separator>defaultvalue" 
-        if "key" is not found, then "defaultvalue" will be returned. It is like an OR: 
-        returns value or "defaultvalue". There is a global default value for normal keys.
+        in order to return a default value when an element is not found. The format 
+        "key<separator>defaultvalue" indicates that if "key" is not found, then "defaultvalue" 
+        will be returned. It is like an OR: returns value or "defaultvalue". 
+        It is posible to define a global default value for all keys.
         """
         def __getitem__(self, key):
             try:
-                k, default = key.split(XMLTemplate.separatorKey, 1)
+                k, default = key.split(SXMLTemplate.separatorKey, 1)
             except ValueError:
-                k = key.split(XMLTemplate.separatorKey, 1)[0]
-                default = XMLTemplate.defaultValue
+                k = key.split(SXMLTemplate.separatorKey, 1)[0]
+                default = SXMLTemplate.defaultValue
             return self.get(k, default)
-
 # [...]
 }}}
+

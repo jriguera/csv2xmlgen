@@ -1,7 +1,7 @@
 <XMLRootElement Author="%(author)s" date="%(date|ano da pera)s">
        <element0 id="%(NUMBER|0)s">
           <node1>
-             The content is %(contenido0|no content)s .
+             The content is %(CONTENIDO0|no content)s .
           </node1>
        </element0>
        
