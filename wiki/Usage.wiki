@@ -1,9 +1,6 @@
 #labels Phase-Deploy,Featured,usage
 <wiki:toc max_depth="3" />
 
-
-= Introduction =
-
 *csv2xmlgen* is a python program to generate XML files based on a input 
 template. It has been developed for generating KML files (Google Earth 
 layers) from CSV data, but it can be used to process any kind of XML 
