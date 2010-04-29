@@ -1,5 +1,5 @@
 #summary How it works
-#labels Phase-Implementation,Phase-Design,development
+#labels Phase-Implementation,Phase-Design,Featured
 ----
 
 <wiki:toc max_depth="4" />
