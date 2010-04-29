@@ -1,5 +1,5 @@
 #summary Comand line usage
-#labels Phase-Deploy,Featured,usage
+#labels Phase-Deploy,Featured
 ----
 
 <wiki:toc max_depth="4" />
