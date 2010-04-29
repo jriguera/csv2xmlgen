@@ -1,6 +1,17 @@
+#summary side navigation
 #labels sidebar
 A list
 
   * [Usage]
-  * [Development]
+  * [Development Development]
   * [http://code.google.com/p/csv2xmlgen/w/list All wiki pages]
+
+
+  * [RunningCaja Downloading and compiling Caja]
+  * [ContributingCode Contributing patches]
+  * [DebuggingShindig Debugging Shindig]
+  * [RunningJQueryTests Testing jQuery]
+  * [RunningPrototypeTests Testing prototype]
+  * [InternalProperties Internal properties]
+  * [HowDoesCajaStopX]
+  * [OpenProblems Open problems]
