@@ -1,5 +1,5 @@
 #labels sidebar
 A list
-  * [Usage Usage and Example Use Case]
-  * [Development How it works]
+  * [Usage]
+  * [Development]
   * [http://code.google.com/p/csv2xmlgen/w/list All wiki pages]
