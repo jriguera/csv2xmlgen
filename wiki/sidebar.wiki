@@ -1,6 +1,4 @@
-#summary side navigation
 #labels sidebar
-#sidebar sidebar
 A list
   * [Usage Usage and Example Use Case]
   * [Development How it works]
