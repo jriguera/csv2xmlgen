@@ -217,7 +217,8 @@ class SXMLTemplate:
         This function lets you define parsers that take any input source (URL, pathname
         to local or network file, or actual data as a string) and deal with it in a 
         uniform manner.  Returned object is guaranteed to have all the basic stdio read 
-        methods (read, readline, readlines). Just .close() the object when you're done with it.
+        methods (read, readline, readlines). Just .close() the object when you are done 
+        with it.
         """
         self.source = source
         if hasattr(source, "read"):
