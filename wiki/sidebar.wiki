@@ -1,6 +1,7 @@
 #summary side navigation
 #labels sidebar
 #sidebar sidebar
-  * Usage Usage and Example Use Case
-  * Development How it works
-  * http://code.google.com/p/csv2xmlgen/w/list All wiki pages
+A list
+  * [Usage Usage and Example Use Case]
+  * [Development How it works]
+  * [http://code.google.com/p/csv2xmlgen/w/list All wiki pages]
