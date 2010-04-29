@@ -1,8 +1,8 @@
 #summary side navigation
 #labels sidebar
+#sidebar sidebar
 
-
-  * [Hola]
-  * [Weñcp,e]
+  * Hola
+  * Adios
   * [Usage Usage and Example Use Case]
   * [Development How it works]
