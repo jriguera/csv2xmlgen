@@ -1,5 +1,10 @@
 #summary How it works
 #labels Phase-Implementation,Phase-Design,development
+----
+
+<wiki:toc max_depth="4" />
+
+----
 
 = Introduction =
 
@@ -70,4 +75,3 @@ class SXMLTemplate:
             return self.get(k, default)
 # [...]
 }}}
-
