@@ -16,7 +16,8 @@
 #
 # Copyright © 2008 Jose Riguera Lopez <jriguera@gmail.com>
 #
-
+import sys
+sys.path.append("..")
 import sxmltemplate
 
 # ###############
