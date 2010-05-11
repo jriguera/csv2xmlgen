@@ -17,7 +17,9 @@
 # Copyright © 2008 Jose Riguera Lopez <jriguera@gmail.com>
 #
 import sys
-sys.path.append("..")
+import os.path
+sys.path.append(os.path.join("..", ".."))
+
 import sxmltemplate
 
 # ###############
