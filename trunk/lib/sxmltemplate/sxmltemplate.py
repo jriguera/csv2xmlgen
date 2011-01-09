@@ -19,8 +19,15 @@
 """
 Main implementation for SXMLTemplate module.
 """
+__author__ = "Jose Riguera Lopez <jriguera@gmail.com>"
+__version__ = "0.4.0"
+__date__ = "December 2010"
+__license__ = "GPL (v3 or later)"
+__copyright__ ="(c) Jose Riguera"
+
 
 import xml.dom.minidom
+import string
 import os.path
 import gettext
 import locale
@@ -31,13 +38,13 @@ __LOCALE_DIR__ = os.path.join(__PACKAGE_DIR__, "locale")
 
 try:
     if not os.path.isdir(__LOCALE_DIR__):
-        print "Error: Cannot locate default locale dir: '%s'." % (__LOCALE_DIR__)
+        print ("Error: Cannot locate default locale dir: '%s'." % (__LOCALE_DIR__))
         __LOCALE_DIR__ = None
     locale.setlocale(locale.LC_ALL,"")
     t = gettext.translation(__GETTEXT_DOMAIN__, __LOCALE_DIR__, fallback=False)
     _ = t.ugettext
 except Exception as e:
-    print "Error setting up the translations: %s" % (e)
+    print ("Error setting up the translations: %s" % (str(e)))
     _ = lambda s: unicode(s)
 
 import exceptions
@@ -54,8 +61,8 @@ class SXMLTemplate:
     It generates a XML DOM document that is based on a xml template source (file, string ...) 
     that will be filled with external data by appending the selected new xml elements with  
     data. Into XML input template, it changes all keys with the format $(key|defautlvalue)s 
-    into the data of "key" from the param dictionary, or "defaultvalue" if key is not found 
-    in dictionary.
+    into the data of "key" from the param dictionary, "defaultvalue" if key is not found 
+    in dictionary or "deletetag" to remove tag (and children). 
     
     Public Attibutes:
 
@@ -63,11 +70,14 @@ class SXMLTemplate:
         :param separatorKey: = "|" -> separator for default key values.
         :param separatorXml: = "." -> separator to indicates repeateable elements.
         :param defaultValue: = "NULL" -> default value for keys without default values.
+        :param deletetag: = "" -> with this value, a key will be deleted if not exists.
     """
     sizeLimit = 1048576 
     separatorKey = "|"
     separatorXml = "."
-    defaultValue = "NULL"
+    defaultValue = " "
+    deletetag = "-"
+    magic = "-#_---__-"
 
 
     class TemplateDict(dict):
@@ -78,7 +88,7 @@ class SXMLTemplate:
         in order to return a default value when an element is not found. The format 
         "key<separator>defaultvalue" indicates that if "key" is not found, then "defaultvalue" 
         will be returned. It is like an OR: returns value or "defaultvalue". 
-        It is posible to define a global default value for all keys.
+        It is possible to define a global default value for all keys.
         """
         def __getitem__(self, key):
             try:
@@ -86,6 +96,10 @@ class SXMLTemplate:
             except ValueError:
                 k = key.split(SXMLTemplate.separatorKey, 1)[0]
                 default = SXMLTemplate.defaultValue
+            random = SXMLTemplate.magic
+            value = self.get(k, default + random)
+            if value == SXMLTemplate.deletetag + random:
+                raise UserWarning
             return self.get(k, default)
 
 
@@ -98,14 +112,20 @@ class SXMLTemplate:
             -`redoelements`: list of XML nodes to repeat into XML with data.
         """
         self.dom = None
-        self.dictionary = self.TemplateDict()
+        self.parents = []
+        self.templatecounter = 0
+        self.templates = []
+        self.templatedom = None
+        self.rawtemplate = None
+        self.redoelements = redoelements
         # Open stream (file, string ...) and read it
         try: 
             fd = self._open(source)
             self.rawtemplate = fd.read(self.sizeLimit)
         except IOError as (errno, strerror):
             raise exceptions.SXMLTemplateErrorLoad(file, errno, strerror)
-        fd.close()
+        else:
+            fd.close()
         # Parse XML and checks that it is correct, well formed ...
         try:
             self.dom = xml.dom.minidom.parseString(self.rawtemplate)
@@ -137,6 +157,7 @@ class SXMLTemplate:
         self.parents = []
         self.templatecounter = 0
         self.templates = []
+        self.redoelements = redoelements
         for element in redoelements:
             # split nodes to repeat
             listelement = element.split(self.separatorXml)
@@ -173,7 +194,7 @@ class SXMLTemplate:
             -`data`: dictionary with data for base nodes of template.
         """
         dictionary = self.TemplateDict(data)
-        self._fillNodeTemplate(self.dom.documentElement, dictionary)
+        delete, lnodes = self._fillNodeTemplate(self.dom.documentElement, dictionary)
 
 
     def setData(self, data, lwhere=[]):
@@ -187,14 +208,15 @@ class SXMLTemplate:
             -`lwhere`: list of nodes which will be filled with data.
         """
         if len(lwhere) < 1:
-            lwhere=self.templates
+            lwhere = list(self.templates)
         dictionary = self.TemplateDict(data)
         for counter in range(0, self.templatecounter):
             if self.templates[counter] not in lwhere:
                 continue
             newnode = self.templates[counter].cloneNode(True)
-            self._fillNodeTemplate(newnode, dictionary)
-            self.parents[counter].appendChild(newnode)
+            delete, lnodes = self._fillNodeTemplate(newnode, dictionary)
+            if not delete :
+                self.parents[counter].appendChild(newnode)
 
 
     def getDom(self, template=False):
@@ -220,14 +242,13 @@ class SXMLTemplate:
         methods (read, readline, readlines). Just .close() the object when you are done 
         with it.
         """
-        self.source = source
         if hasattr(source, "read"):
             return source
         # try to open with urllib (if source is http, ftp, or file URL)
         try:
             import urllib
             return urllib.urlopen(source)
-        except (IOError, OSError):
+        except:
             pass
         # try to open with native open function (if source is pathname)
         try:
@@ -262,15 +283,40 @@ class SXMLTemplate:
         if node.nodeType == xml.dom.minidom.Node.ELEMENT_NODE:
             if node.hasAttributes():
                 for attribute in node.attributes.keys():
-                    value = node.getAttribute(attribute) % dictionary
-                    node.setAttribute(attribute, value)
+                    try:
+                        value = node.getAttribute(attribute) % dictionary
+                    except UserWarning:
+                        node.removeAttribute(attribute)
+                    else:
+                        node.setAttribute(attribute, value)
         if node.hasChildNodes():
+            delnodes = False
+            lnodes = []
+            remnodes = []
             for child in node.childNodes:
-                self._fillNodeTemplate(child, dictionary)
+                delnode, lnode = self._fillNodeTemplate(child, dictionary)
+                if delnode and lnode:
+                    remnodes += lnode
+                    delnodes = False
+                    lnodes = []
+                elif delnode:
+                    lnodes.append(node)
+                    delnodes = True
+            for child in remnodes:
+                node.removeChild(child)
+            return delnodes, lnodes
         else:
-            if node.nodeType == xml.dom.minidom.Node.TEXT_NODE:
-                value = node.data % dictionary
-                node.data = value
+            if node.nodeType == xml.dom.minidom.Node.TEXT_NODE \
+                or node.nodeType == xml.dom.minidom.Node.CDATA_SECTION_NODE \
+                or node.nodeType == xml.dom.minidom.Node.COMMENT_NODE :
+                try:
+                    value = node.data % dictionary
+                    node.data = value
+                except UserWarning:
+                    return True, []
+                except:
+                    pass
+            return False, []
 
 
     def _delWhiteNodes(self, node):

@@ -72,6 +72,8 @@ TemplateNodes = XMLRootElement.element0.node1 XMLRootElement.element2.node0
 SeparatorKey = |
 # Default value for data without default value in the XML template file
 DefaultValue = 
+# Delete entrys (and children) with this tag if key is not found.
+DeleteTag = -
 
 # CSV input file (Comma Separated Values)
 [csv]
@@ -103,16 +105,16 @@ Contents of example input template file _plantilla.xml_:
 
 {{{
 <XMLRootElement Author="%(author)s" date="%(date|ano da pera)s">
-   <element0 id="%(NUMBER|0)s">
-      <node1>
-         The content is %(CONTENIDO0|no content)s .
-      </node1>
-   </element0>
-   <element2>
-      <node0>
-          The content is %(CONTENIDO2|no content)s .
-      </node0>
-   </element2>
+       <element0 id="%(NUMBER|0)s">
+          <node1 id="%(NUMBER|0)s">
+             The content is %(CONTENIDO0|no content)s .
+          </node1>
+       </element0>
+       <element2>
+          <node0 id="%(NUMBER|-)s">
+              The content is %(CONTENIDO2|-)s .
+          </node0>
+       </element2>
 </XMLRootElement>
 }}}
 
@@ -121,40 +123,38 @@ Contents of example input template file _plantilla.xml_:
 CSV input data file for the above XML template, _entrada.csv_:
 
 {{{
-NUMBER, CONTENIDO0, CONTENIDO2
-0, prueba0, TEST 0
-1, data1, TEST 1
-2, data 2, TEST 2
+NUMBER,CONTENIDO0,CONTENIDO2
+0,prueba0,TEST 0
+1,,
+2,data 2,TEST 2
 }}}
 
 === XML Output file ===
 
 {{{
 <?xml version="1.0" encoding="utf-8"?>
-<XMLRootElement Author="Noe" date="December 2008">
+<XMLRootElement Author="Jose" date="December 2008">
    <element0 id="0">
-      <node1>
+      <node1 id="0">
              The content is  prueba0 .
       </node1>
-      <node1>
-             The content is  data1 .
+      <node1 id="1">
+             The content is no content .
       </node1>
-      <node1>
+      <node1 id="2">
              The content is  data 2 .
       </node1>
    </element0>
    <element2>
-      <node0>
+      <node0 id="0">
               The content is  TEST 0 .
       </node0>
-      <node0>
-              The content is  TEST 1 .
-      </node0>
-      <node0>
+      <node0 id="2">
               The content is  TEST 2 .
       </node0>
    </element2>
 </XMLRootElement>
-<!--XML generated with csv2xmlgen version 0.3.0 at Thu Apr 29 01:37:06 2010.-->
-<!--csv2xmlgen (c) Jose Riguera, October 2008, a GPL (v3 or later) program created by Jose Riguera Lopez <jriguera_at_gmail.com>.-->
+<!--XML generated with csv2xmlgen version 0.4.0 at Sun Jan  9 21:44:39 2011.-->
+<!--csv2xmlgen (c) Jose Riguera, October 2008, a GPL (v3 or later) program created by Jose Riguera Lopez <jriguera@gmail.com>.-->
+
 }}}

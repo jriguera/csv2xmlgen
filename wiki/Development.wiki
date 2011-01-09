@@ -49,11 +49,14 @@ class SXMLTemplate:
         :param separatorKey: = "|" -> separator for default key values.
         :param separatorXml: = "." -> separator to indicates repeateable elements.
         :param defaultValue: = "NULL" -> default value for keys without default values.
+        :param deletetag: = "" -> with this value, a key will be deleted if not exists.
     """
     sizeLimit = 1048576 
     separatorKey = "|"
     separatorXml = "."
-    defaultValue = "NULL"
+    defaultValue = " "
+    deletetag = "-"
+    magic = "-#_---__-"
 
 
     class TemplateDict(dict):
@@ -64,7 +67,7 @@ class SXMLTemplate:
         in order to return a default value when an element is not found. The format 
         "key<separator>defaultvalue" indicates that if "key" is not found, then "defaultvalue" 
         will be returned. It is like an OR: returns value or "defaultvalue". 
-        It is posible to define a global default value for all keys.
+        It is possible to define a global default value for all keys.
         """
         def __getitem__(self, key):
             try:
@@ -72,6 +75,10 @@ class SXMLTemplate:
             except ValueError:
                 k = key.split(SXMLTemplate.separatorKey, 1)[0]
                 default = SXMLTemplate.defaultValue
+            random = SXMLTemplate.magic
+            value = self.get(k, default + random)
+            if value == SXMLTemplate.deletetag + random:
+                raise UserWarning
             return self.get(k, default)
 # [...]
 }}}
