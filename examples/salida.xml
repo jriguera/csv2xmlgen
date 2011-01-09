@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<XMLRootElement Author="Noe" date="December 2008">
+<XMLRootElement Author="Jose" date="December 2008">
    <element0 id="0">
-      <node1>
+      <node1 id="0">
          
              The content is  prueba0 .
           
       </node1>
-      <node1>
+      <node1 id="1">
          
-             The content is  data1 .
+             The content is no content .
           
       </node1>
-      <node1>
+      <node1 id="2">
          
              The content is  data 2 .
           
       </node1>
    </element0>
    <element2>
-      <node0>
+      <node0 id="0">
          
               The content is  TEST 0 .
           
       </node0>
-      <node0>
-         
-              The content is  TEST 1 .
-          
-      </node0>
-      <node0>
+      <node0 id="2">
          
               The content is  TEST 2 .
           
       </node0>
    </element2>
 </XMLRootElement>
-<!--XML generated with csv2xmlgen version 0.3.0 at Thu Apr 29 01:37:06 2010.-->
+<!--XML generated with csv2xmlgen version 0.4.0 at Sun Jan  9 21:44:39 2011.-->
 <!--csv2xmlgen (c) Jose Riguera, October 2008, a GPL (v3 or later) program created by Jose Riguera Lopez <jriguera@gmail.com>.-->

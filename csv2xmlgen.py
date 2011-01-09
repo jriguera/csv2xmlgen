@@ -26,8 +26,8 @@ template.
 """
 __program__ = "csv2xmlgen"
 __author__ = "Jose Riguera Lopez <jriguera@gmail.com>"
-__version__ = "0.3.0"
-__date__ = "October 2008"
+__version__ = "0.4.0"
+__date__ = "December 2011"
 __license__ = "GPL (v3 or later)"
 __copyright__ ="(c) Jose Riguera, October 2008"
 
@@ -83,6 +83,7 @@ CSVquotechar = '"'
 CSVencoding = "utf-8 windows-1252 iso-8859-1 iso-8859-2 us-ascii"
 XMLseparatorKey = "|"
 XMLdefaultValue = " "
+XMLdeletetag = ""
 XMLlineterminator = "\\n"
 
 
@@ -106,9 +107,10 @@ def main(options):
     # Set up the XML Template
     template = options['main']['xmltemplate']
     try:
+        sxmltemplate.SXMLTemplate.separatorKey = options['main']['separatorkey']
+        sxmltemplate.SXMLTemplate.defaultValue = options['main']['defaultvalue']
+        sxmltemplate.SXMLTemplate.deletetag = options['main']['deletetag']
         xmltemplate = sxmltemplate.SXMLTemplate(template)
-        xmltemplate.separatorKey = options['main']['separatorkey']
-        xmltemplate.defaultValue = options['main']['defaultvalue']
         xmltemplate.setTemplates(options['main']['templatenodes'])
     except sxmltemplate.SXMLTemplateError as e:
         toolbox.die(_("Cannot parse XML template: %s.") % e)
@@ -157,15 +159,16 @@ def processCsv(fd, xmltemplate, options):
             for k,v in row.iteritems():
                 # try to determine the best csv encoding
                 key = k.strip()
-                for enc in encodings:
-                    try:
-                        data[key] = unicode(v, enc, "strict")
-                        #data[k.strip()] = v.decode(enc)
-                        break
-                    except:
-                        pass
-                else:
-                    data[key] = v
+                if v != None and len(v) > 0:
+                    for enc in encodings:
+                        try:
+                            data[key] = unicode(v, enc, "strict")
+                            #data[k.strip()] = v.decode(enc)
+                            break
+                        except:
+                            pass
+                    else:
+                        data[key] = v
             xmltemplate.setData(data)
             lines = lines + 1
     except csv.Error as e:
@@ -227,7 +230,9 @@ established by default in the configuration file:
          # Separator to indicate default values in the XML Template.
          SeparatorKey = |
          # Default value for data without default value in the XML template file
-         DefaultValue = 
+         DefaultValue =  
+         # Delete entrys (and children) with this tag if key is not found.
+         DeleteTag = -
 
     # CSV input file (Comma Separated Values)
     [csv]
@@ -254,23 +259,23 @@ Example of input template file:
 
     <XMLRootElement Author="%%(author)s" date='%%(date|ano da pera)s'>
        <element0 id='%%(NUMBER|0)s'>
-          <node1>
+          <node1 id='%%(NUMBER|0)s'>
              The content is %%(CONTENIDO0|no content)s .
           </node1>
        </element0>
        <element2>
-          <node0>
-              The content is %%(CONTENIDO2|no content)s .
+          <node0 id='%%(NUMBER|0)s'>
+              The content is %%(CONTENIDO2|-)s .
           </node0>
        </element2>
     </XMLRootElement>
 
 CSV input data file for the above XML template:
 
-    NUMBER, CONTENIDO0, CONTENIDO2
-    0, prueba0, TEST 0
-    1, data1, TEST 1
-    2, data 2, TEST 2
+    NUMBER,CONTENIDO0,CONTENIDO2
+    0,prueba0,TEST 0
+    1,,
+    2,data 2,TEST 2
 
 The output file is left as an exercise for the reader ... 
 """)
@@ -348,7 +353,7 @@ if __name__ == "__main__":
     defaultconfig['main']['csvinputfile'] = input
     defaultconfig['main']['xmloutputfile'] = output
     defaultconfig['main']['xmltemplate'] = template
-    defaultconfig['main']['templatenodes'] = templatenodes 
+    defaultconfig['main']['templatenodes'] = templatenodes
     defaultconfig['csv'] = {}
     defaultconfig['xml'] = {}
     defaultconfig['template'] = {}
@@ -372,6 +377,7 @@ if __name__ == "__main__":
     options['csv']['encoding'] = options['csv']['encoding'].split()
     options['main'].setdefault('separatorkey', XMLseparatorKey)
     options['main'].setdefault('defaultvalue', XMLdefaultValue)
+    options['main'].setdefault('deletetag', XMLdeletetag)
     options['xml'].setdefault('lineterminator', XMLlineterminator)
     # Main program
     main(options)

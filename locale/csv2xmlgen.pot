@@ -8,62 +8,63 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-04 21:37+0200\n"
+"POT-Creation-Date: 2011-01-09 21:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: csv2xmlgen.py:97
+#: csv2xmlgen.py:98
 #, python-format
 msgid ""
 "Cannot open '%(input)s' for reading: I/O error (%(errno)s): %(strerror)s."
 msgstr ""
 
-#: csv2xmlgen.py:104
+#: csv2xmlgen.py:105
 #, python-format
 msgid ""
 "Cannot open '%(output)s' for writing: I/O error (%(errno)s): %(strerror)s."
 msgstr ""
 
-#: csv2xmlgen.py:114
+#: csv2xmlgen.py:116
 #, python-format
 msgid "Cannot parse XML template: %s."
 msgstr ""
 
-#: csv2xmlgen.py:118
+#: csv2xmlgen.py:120
 #, python-format
 msgid ""
 "Processing input file '%(input)s' with XML template '%(xmltemplate)s' ... "
 msgstr ""
 
-#: csv2xmlgen.py:125
+#: csv2xmlgen.py:127
 #, python-format
 msgid "Processing CSV data: '%s'."
 msgstr ""
 
-#: csv2xmlgen.py:125 csv2xmlgen.py:173
+#: csv2xmlgen.py:127 csv2xmlgen.py:176
 msgid "- ERROR: "
 msgstr ""
 
-#: csv2xmlgen.py:126
+#: csv2xmlgen.py:128
 #, python-format
 msgid "~ %s processed lines."
 msgstr ""
 
-#: csv2xmlgen.py:139
+#: csv2xmlgen.py:141
 #, python-format
 msgid "XML file '%s' generated."
 msgstr ""
 
-#: csv2xmlgen.py:173
+#: csv2xmlgen.py:176
 #, python-format
 msgid "Reading CSV file, line %(line)s: %(exception)s."
 msgstr ""
 
-#: csv2xmlgen.py:185
+#: csv2xmlgen.py:188
 #, python-format
 msgid ""
 " \n"
@@ -120,7 +121,9 @@ msgid ""
 "         SeparatorKey = |\n"
 "         # Default value for data without default value in the XML template "
 "file\n"
-"         DefaultValue = \n"
+"         DefaultValue =  \n"
+"         # Delete entrys (and children) with this tag if key is not found.\n"
+"         DeleteTag = -\n"
 "\n"
 "    # CSV input file (Comma Separated Values)\n"
 "    [csv]\n"
@@ -149,28 +152,28 @@ msgid ""
 "\n"
 "    <XMLRootElement Author=\"%%(author)s\" date='%%(date|ano da pera)s'>\n"
 "       <element0 id='%%(NUMBER|0)s'>\n"
-"          <node1>\n"
+"          <node1 id='%%(NUMBER|0)s'>\n"
 "             The content is %%(CONTENIDO0|no content)s .\n"
 "          </node1>\n"
 "       </element0>\n"
 "       <element2>\n"
-"          <node0>\n"
-"              The content is %%(CONTENIDO2|no content)s .\n"
+"          <node0 id='%%(NUMBER|0)s'>\n"
+"              The content is %%(CONTENIDO2|-)s .\n"
 "          </node0>\n"
 "       </element2>\n"
 "    </XMLRootElement>\n"
 "\n"
 "CSV input data file for the above XML template:\n"
 "\n"
-"    NUMBER, CONTENIDO0, CONTENIDO2\n"
-"    0, prueba0, TEST 0\n"
-"    1, data1, TEST 1\n"
-"    2, data 2, TEST 2\n"
+"    NUMBER,CONTENIDO0,CONTENIDO2\n"
+"    0,prueba0,TEST 0\n"
+"    1,,\n"
+"    2,data 2,TEST 2\n"
 "\n"
 "The output file is left as an exercise for the reader ... \n"
 msgstr ""
 
-#: csv2xmlgen.py:280
+#: csv2xmlgen.py:285
 msgid ""
 "\n"
 "This program is free software: you can redistribute it and/or modify\n"
@@ -187,25 +190,25 @@ msgid ""
 "along with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 
-#: csv2xmlgen.py:329
+#: csv2xmlgen.py:334
 msgid "Searching config file ..."
 msgstr ""
 
-#: csv2xmlgen.py:337
+#: csv2xmlgen.py:342
 #, python-format
 msgid "Cannot find the configuration file '%s'."
 msgstr ""
 
-#: csv2xmlgen.py:340
+#: csv2xmlgen.py:345
 #, python-format
 msgid "Reading configuration file '%s' ..."
 msgstr ""
 
-#: csv2xmlgen.py:343
+#: csv2xmlgen.py:348
 #, python-format
 msgid "Cannot understand config file format '%s'."
 msgstr ""
 
-#: csv2xmlgen.py:358
+#: csv2xmlgen.py:363
 msgid "Using default compiled values ..."
 msgstr ""

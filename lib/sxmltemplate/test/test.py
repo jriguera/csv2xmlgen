@@ -35,6 +35,8 @@ def test():
         <slide number="%(NUMBER|0)s">
             <title>%(SLIDE)s</title>
             <point p="punto">El contenido del "%(POINT|punto sin determinar)s" esta bien</point>
+	    <desc>%(DESC|)s</desc>
+	    <desc2>%(DESCC|)s</desc2>
         </slide>
     </slideshow>"""
     template = sxmltemplate.SXMLTemplate(template)
