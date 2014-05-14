@@ -22,7 +22,7 @@ Clue: [http://blog.ianbicking.org/templating-via-dict-wrappers.html]
 === Implementation ===
 
 Here you are the code. The class *`TemplateDict`* inherits from python class 
-*`dict`* (python dictionary) and redefines *`__getitem__`* method whose is 
+*`dict`* (python dictionary) and redefines *`__getitem__`* method which is 
 used by the string operator *`%`* (python string template operator). The rest 
 of code works with XML documents using the API of *minidom* and *csv* modules. 
 
